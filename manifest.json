@@ -1,0 +1,31 @@
+{
+	"name": "web-mediakeys",
+	"version": "0.1",
+	"description": "Control grooveshark, rdio, and others from your desktop's media keys",
+	"browser_action": {
+		"default_icon": "images/icon.png",
+		"default_title": "Web MediaKeys",
+		"default_popup": "popup.html"
+	},
+	"manifest_version": 2,
+	"content_security_policy": "default-src 'self' ",
+ 	"minimum_chrome_version": "14.0.835.202",
+	"options_page": "options.html",
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"css": [
+				"styles/inject.css"
+			],
+			"js": [
+				"javascripts/inject.js"
+			]
+		}
+	],
+	"permissions": [
+		"tabs"
+	]
+}
