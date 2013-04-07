@@ -1,3 +1,3 @@
 function lulz() {
-    document.write('<p>poop</p>');
+    document.getElementById('dummy').innerHTML = 'wat';
 }
