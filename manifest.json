@@ -11,14 +11,7 @@
 	"content_security_policy": "default-src 'self' ",
  	"minimum_chrome_version": "14.0.835.202",
 	"options_page": "options.html",
-	"content_scripts": [
-		{
-			"matches": [
-				"http://*/*",
-				"https://*/*"
-			]
-		}
-	],
+
 	"permissions": [
 		"tabs"
 	]
