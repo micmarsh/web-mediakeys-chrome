@@ -5,7 +5,7 @@
 	"browser_action": {
 		"default_icon": "images/icon.png",
 		"default_title": "Web MediaKeys",
-		"default_popup": "popup.html"
+		"default_popup": "mediakeys.html"
 	},
 	"manifest_version": 2,
 	"content_security_policy": "default-src 'self' ",
