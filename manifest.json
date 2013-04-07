@@ -16,12 +16,6 @@
 			"matches": [
 				"http://*/*",
 				"https://*/*"
-			],
-			"css": [
-				"styles/inject.css"
-			],
-			"js": [
-				"javascripts/inject.js"
 			]
 		}
 	],
