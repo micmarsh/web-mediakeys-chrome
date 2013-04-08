@@ -14,10 +14,9 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"http://www.rdio.com/*",
 				"http://www.grooveshark.com/*",
-				"https://www.rdio.com/*",
-				"https://www.grooveshark.com/*"
+				"https://www.grooveshark.com/*",
+				"http://www.rdio.com/*"
 			],
 			"js": [
 				"javascripts/controller.js"
