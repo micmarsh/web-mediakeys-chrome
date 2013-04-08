@@ -1,1 +1,4 @@
-alert(window.location.origin);
+var elements = {
+    'http://www.grooveshark.com': 'play-pause'
+    'http://www.rdio.com': 'play_pause'
+}
