@@ -1,1 +1,1 @@
-alert('what up!!!');
+alert(window.location.origin);

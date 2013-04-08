@@ -14,9 +14,7 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"http://www.grooveshark.com/*",
-				"https://www.grooveshark.com/*",
-				"http://www.rdio.com/*"
+				"<all_urls>"
 			],
 			"js": [
 				"javascripts/controller.js"
