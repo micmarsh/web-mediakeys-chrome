@@ -1,3 +1,6 @@
+DEBUG = no #lol no
+
+#GOAL get shit to load and bind in both places
 
 values = (object) ->
     Object.keys(object).map (key) -> object[key]
@@ -7,17 +10,18 @@ getElement = (selector) ->
     document.getElementsByClassName(selector)[0]
 
 pageHasAllButtons = (page) ->
-    return values(page).reduce (boolean, elementName) ->
-        alert elementName
-        alert getElement(elementName)
-        boolean and Boolean getElement elementName
+    return values(page).reduce (allButtonsExist, elementName) ->
+        if DEBUG
+            alert elementName
+            alert getElement(elementName)
+        allButtonsExist and Boolean getElement elementName
     , true
 
 
 window.onload = ->
     LOCATION = window.location.hostname
 
-    alert LOCATION
+    alert LOCATION if DEBUG
 
     groovesharkElements =
         play: 'play-pause'
@@ -34,12 +38,13 @@ window.onload = ->
         'rdio.com': rdioElements
         'www.rdio.com': rdioElements
 
-    alert JSON.stringify elements
-
+    unless LOCATION in Object.keys(elements)
+        return
     unless pageHasAllButtons elements[LOCATION]
         return
 
-    alert 'woot did not abort'
+    alert 'woot did not abort' if DEBUG
+
 
     #TODO: everythin loads in grooveshark but may not actually bind to anything,
     #nothing loads automatically in rdio but things are definitely bound to where
