@@ -1,17 +1,26 @@
+LOCATION = window.location.hostname
+
 elements =
     'grooveshark.com':
         play: 'play-pause'
         forward: 'play-next'
         back: 'play-prev'
-        #window.location.hostname
     'rdio.com':
         play:  'play_pause'
         forward: 'next'
         back: 'prev'
 
-#TODO: a quick check for the right page a function that loads up (this should not be a content
-    #script, at least the vast majority of it's functions should not be) attempts to pull
-#up a "play" button
+values = (object) ->
+    Object.keys(object).map (key) -> object[key]
+
+pageHasAllButtons = (pagename) ->
+    currentPage = elements[pagename]
+    return values(currentPage).reduce (boolean, elementName) ->
+        boolean and Boolean document.getElementById(elementName)
+    , true
+
+unless pageHasAllButtons LOCATION
+    return
 
 fireEvent = (element, event) -> console.log element#TODO: study that dude's function and write a legit one here
 
