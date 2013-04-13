@@ -1,50 +1,75 @@
-LOCATION = window.location.hostname
-
-elements =
-    'grooveshark.com':
-        play: 'play-pause'
-        forward: 'play-next'
-        back: 'play-prev'
-    'rdio.com':
-        play:  'play_pause'
-        forward: 'next'
-        back: 'prev'
 
 values = (object) ->
     Object.keys(object).map (key) -> object[key]
 
-pageHasAllButtons = (pagename) ->
-    currentPage = elements[pagename]
-    return values(currentPage).reduce (boolean, elementName) ->
-        boolean and Boolean document.getElementById(elementName)
+getElement = (selector) ->
+    document.getElementById(selector) or
+    document.getElementsByClassName(selector)[0]
+
+pageHasAllButtons = (page) ->
+    return values(page).reduce (boolean, elementName) ->
+        alert elementName
+        alert getElement(elementName)
+        boolean and Boolean getElement elementName
     , true
 
-unless pageHasAllButtons LOCATION
-    return
 
-fireEvent = (element, event) -> console.log element#TODO: study that dude's function and write a legit one here
+window.onload = ->
+    LOCATION = window.location.hostname
 
-click = (element) -> fireEvent(element, 'click')
+    alert LOCATION
 
-#TODO: functionality needed: grabbing dom elements (may be built into dude's fireEvent function,
-    #but if not, simple enough, just need to confirm youtube's elements use ids as well)
+    groovesharkElements =
+        play: 'play-pause'
+        forward: 'play-next'
+        back: 'play-prev'
+    rdioElements =
+        play:  'play_pause'
+        forward: 'next'
+        back: 'prev'
 
-Mediakeys = {}
+    elements =
+        'grooveshark.com': groovesharkElements
+        'www.grooveshark.com': groovesharkElements
+        'rdio.com': rdioElements
+        'www.rdio.com': rdioElements
 
-findDOMelements = (domain) ->
-    DOMelements = {}
-    for mediaKey, domID of elements[domain]
-        DOMelements[mediaKey] = document.getElementById(domID)
-    return DOMelements
+    alert JSON.stringify elements
 
-bindKeyFunctions = (DOMelements) ->
-    for mediaKey, domElement of DOMelements
-        Mediakeys[mediaKey] = -> click(domElement)
+    unless pageHasAllButtons elements[LOCATION]
+        return
 
-Mediakeys.init = (domain) ->
-    DOMelements = findDOMelements domain
-    bindKeyFunctions DOMelements
+    alert 'woot did not abort'
 
-window.Mediakeys = Mediakeys
+    #TODO: everythin loads in grooveshark but may not actually bind to anything,
+    #nothing loads automatically in rdio but things are definitely bound to where
+    #they need to be
+
+    fireEvent = (element, event) -> console.log element#TODO: study that dude's function and write a legit one here
+
+    click = (element) -> fireEvent(element, 'click')
+
+    #TODO: functionality needed: grabbing dom elements (may be built into dude's fireEvent function,
+        #but if not, simple enough, just need to confirm youtube's elements use ids as well)
+
+    Mediakeys = {}
+
+    findDOMelements = (domain) ->
+        DOMelements = {}
+        for mediaKey, domID of elements[domain]
+            DOMelements[mediaKey] = getElement domID
+        return DOMelements
+
+    bindKeyFunctions = (DOMelements) ->
+        for mediaKey, domElement of DOMelements
+            Mediakeys[mediaKey] = -> click(domElement)
+
+    Mediakeys.init = (domain) ->
+        DOMelements = findDOMelements domain
+        bindKeyFunctions DOMelements
+        return Mediakeys
+
+    window.Mediakeys = Mediakeys.init LOCATION
+
 
 
