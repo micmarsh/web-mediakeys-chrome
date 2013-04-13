@@ -76,10 +76,12 @@ window.onload = ->
             DOMelements[mediaKey] = getElement domID
         return DOMelements
 
+    bindSingleKeyFunction = (mediaKey, domElement) ->
+        Mediakeys[mediaKey] = -> click(domElement)
+
     bindKeyFunctions = (DOMelements) ->
         for mediaKey, domElement of DOMelements
-            Mediakeys[mediaKey] = do (domElement) ->
-                return -> click(domElement)
+            bindSingleKeyFunction mediaKey, domElement
 
     Mediakeys.init = (domain) ->
         DOMelements = findDOMelements domain
