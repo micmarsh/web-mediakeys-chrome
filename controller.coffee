@@ -63,8 +63,6 @@ window.onload = ->
         'youtube.com': youtubeElements
         'www.youtube.com': youtubeElements
 
-    unless LOCATION in Object.keys elements
-        return
     playButton = getElement elements[LOCATION].play
     #TODO: youtube neccessitates lots of error checking, like if it decides
     #to turn back into flash (maybe some videos are just all flash)
