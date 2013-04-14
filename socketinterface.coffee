@@ -6,7 +6,7 @@ allExist = (dependencies) ->
     , true
 
 waitFor = (dependencies, callback) ->
-    do waitToSetup ->
+    do waitToSetup  = ->
         unless allExist dependencies
             console.log 'waiting!'
             setTimeout waitToSetup, 500
