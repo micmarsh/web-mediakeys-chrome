@@ -1,6 +1,7 @@
 DEBUG = no #lol no
 
-#GOAL get shit to load and bind in both places
+#GOAL get shit to load and bind in both places. It does! except can't create
+#window.Mediakeys from here. Perhaps inject this into page. Yeah, that could work
 
 #possible ways to divide things up: a Mediakeys class that takes a document object,
 #binds all the keys when initialized
@@ -30,6 +31,7 @@ pageHasAllButtons = (page) ->
         allButtonsExist and Boolean getElement elementName
     , true
 
+playButtonExists = (page) ->
 
 window.onload = ->
     LOCATION = window.location.hostname
@@ -44,16 +46,29 @@ window.onload = ->
         play:  'play_pause'
         forward: 'next'
         back: 'prev'
+    youtubeElements =
+        play: do ->
+            playClass = 'html5-play-button'
+            pauseClass = 'html5-pause-button'
+            check = getElement playClass
+            if check then playClass else pauseClass
+        forward: 'watch7-playlist-bar-next-button'
+        back: 'watch7-playlist-bar-prev-button'
 
     elements =
         'grooveshark.com': groovesharkElements
         'www.grooveshark.com': groovesharkElements
         'rdio.com': rdioElements
         'www.rdio.com': rdioElements
+        'youtube.com': youtubeElements
+        'www.youtube.com': youtubeElements
 
-    unless LOCATION in Object.keys(elements)
+    unless LOCATION in Object.keys elements
         return
-    unless pageHasAllButtons elements[LOCATION]
+    playButton = getElement elements[LOCATION].play
+    #TODO: youtube neccessitates lots of error checking, like if it decides
+    #to turn back into flash (maybe some videos are just all flash)
+    unless Boolean playButton
         return
 
     alert 'woot did not abort' if DEBUG
@@ -88,7 +103,7 @@ window.onload = ->
         bindKeyFunctions DOMelements
         return Mediakeys
 
-    window.Mediakeys = Mediakeys.init LOCATION
+    return Mediakeys.init LOCATION
 
 
 
