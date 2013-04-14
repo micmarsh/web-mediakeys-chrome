@@ -18,9 +18,16 @@ injectScript = (url) ->
     script.src = url
     (document.head or document.documentElement).appendChild script
 
-window.onload = ->
-    injectScript SOCKET_IO
-    alert SOCKET_IO
-    for fileName in ['controller', 'socketinterface']
-        injectScript chrome.extension.getURL "javascripts/#{fileName}.js" +
-        "?nocache=#{new Date().getTime()}"
+injected = false;
+
+injectAllScripts = ->
+    unless injected
+        injectScript SOCKET_IO
+        for fileName in ['controller', 'socketinterface']
+            injectScript chrome.extension.getURL "javascripts/#{fileName}.js" +
+            "?nocache=#{new Date().getTime()}"
+        injected = true
+
+window.onload = injectAllScripts
+setTimeout injectAllScripts, 5000
+#rdio doesn't like to fire onload events, so trick it
