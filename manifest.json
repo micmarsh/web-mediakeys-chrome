@@ -7,10 +7,6 @@
 		"default_title": "Web MediaKeys",
 		"default_popup": "mediakeys.html"
 	},
-	"background": { "scripts": [
-		"http://localhost:3000/socket.io/socket.io.js",
-		"socketinterface.js"
-	] },
 	"manifest_version": 2,
 	"content_security_policy": "default-src 'self' ",
  	"minimum_chrome_version": "14.0.835.202",
