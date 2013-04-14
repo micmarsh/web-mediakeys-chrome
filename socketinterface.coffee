@@ -6,17 +6,19 @@ allExist = (dependencies) ->
         exists and !!window[dep]
     , true
 
-waitFor = (dependencies) ->
-    return waitToSetup = ->
+waitFor = (dependencies, callback) ->
+    do waitToSetup ->
         unless allExist dependencies
             console.log 'waiting!'
             setTimeout waitToSetup, 500
         else
-            setup Mediakeys, io
+            callback()
 
 setup = (keys) ->
     buttons = ['play', 'back', 'forward']
-    for button in buttons
 
+do functionName ->
+    console.log 'woot'
 
-waitFor(['io', 'Mediakeys'])()
+waitFor ['io', 'Mediakeys'], ->
+    setup Mediakeys, io
