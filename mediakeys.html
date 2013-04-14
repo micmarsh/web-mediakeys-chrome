@@ -4,12 +4,18 @@
 	<meta charset="utf-8">
 	<title>Page Title</title>
 	<link rel="stylesheet" href="styles/main.css">
-    <script src="javascripts/mediakeys.js"></script>
+    <script src="javascripts/socketinterface.js"></script>
 </head>
 <body>
  <!-- TODO: there should probably be a "current state"
  menu somewhere, making this change could be good practice -->
- <button onclick="lulz()">Play/Pause</button>
- <div id="dummy"></div>
+ <button>Play/Pause</button>
+ <script>
+    var script = document.createElement('script');
+    //defined in socketinterface.js, so we can
+    //re-use this constant
+    script.src = SOCKET_ORIGIN + '/socket.io/socket.io.js'
+    document.head.appendChild(script);
+ </script>
 </body>
 </html>
