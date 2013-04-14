@@ -1,8 +1,10 @@
-window.SOCKET_ORIGIN = 'http://localhost:3000'
+SOCKET_ORIGIN = 'http://localhost:3000'
+
 allExist = (dependencies) ->
     dependencies.reduce (exists, dep) ->
         exists and !!window[dep]
     , true
+
 waitFor = (dependencies, callback) ->
     do waitToSetup ->
         unless allExist dependencies
@@ -10,8 +12,16 @@ waitFor = (dependencies, callback) ->
             setTimeout waitToSetup, 500
         else
             callback()
-setup = (keys) ->
+
+createButtonBinding = (keys, button) ->
+    (data) -> keys[button]()
+
+setup = (keys, io) ->
+    socket = io.connect SOCKET_ORIGIN
     buttons = ['play', 'back', 'forward']
+
+    for button in buttons
+        socket.on button, createButtonBinding(keys, button)
 
 waitFor ['io', 'Mediakeys'], ->
     setup Mediakeys, io
