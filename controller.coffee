@@ -68,6 +68,7 @@ window.onload = ->
     playButton = getElement elements[LOCATION].play
     #TODO: youtube neccessitates lots of error checking, like if it decides
     #to turn back into flash (maybe some videos are just all flash)
+    #we may also be able to grab non-play buttons (just a thought, may not too)
     unless Boolean playButton
         return
 
