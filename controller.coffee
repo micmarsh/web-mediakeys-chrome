@@ -33,76 +33,74 @@ pageHasAllButtons = (page) ->
 
 playButtonExists = (page) ->
 
-window.onload = ->
-    LOCATION = window.location.hostname
+LOCATION = window.location.hostname
 
-    alert LOCATION if DEBUG
+alert LOCATION if DEBUG
 
-    groovesharkElements =
-        play: 'play-pause'
-        forward: 'play-next'
-        back: 'play-prev'
-    rdioElements =
-        play:  'play_pause'
-        forward: 'next'
-        back: 'prev'
-    youtubeElements =
-        play: do ->
-            playClass = 'html5-play-button'
-            pauseClass = 'html5-pause-button'
-            check = getElement playClass
-            if check then playClass else pauseClass
-        forward: 'watch7-playlist-bar-next-button'
-        back: 'watch7-playlist-bar-prev-button'
+groovesharkElements =
+    play: 'play-pause'
+    forward: 'play-next'
+    back: 'play-prev'
+rdioElements =
+    play:  'play_pause'
+    forward: 'next'
+    back: 'prev'
+youtubeElements =
+    play: do ->
+        playClass = 'html5-play-button'
+        pauseClass = 'html5-pause-button'
+        check = getElement playClass
+        if check then playClass else pauseClass
+    forward: 'watch7-playlist-bar-next-button'
+    back: 'watch7-playlist-bar-prev-button'
 
-    elements =
-        'grooveshark.com': groovesharkElements
-        'www.grooveshark.com': groovesharkElements
-        'rdio.com': rdioElements
-        'www.rdio.com': rdioElements
-        'youtube.com': youtubeElements
-        'www.youtube.com': youtubeElements
+elements =
+    'grooveshark.com': groovesharkElements
+    'www.grooveshark.com': groovesharkElements
+    'rdio.com': rdioElements
+    'www.rdio.com': rdioElements
+    'youtube.com': youtubeElements
+    'www.youtube.com': youtubeElements
 
-    playButton = getElement elements[LOCATION].play
-    #TODO: youtube neccessitates lots of error checking, like if it decides
-    #to turn back into flash (maybe some videos are just all flash)
-    #we may also be able to grab non-play buttons (just a thought, may not too)
-    unless Boolean playButton
-        return
+playButton = getElement elements[LOCATION].play
+#TODO: youtube neccessitates lots of error checking, like if it decides
+#to turn back into flash (maybe some videos are just all flash)
+#we may also be able to grab non-play buttons (just a thought, may not too)
+unless Boolean playButton
+    return
 
-    alert 'woot did not abort' if DEBUG
+alert 'woot did not abort' if DEBUG
 
+#TODO: everything loads in grooveshark but may not actually bind to anything,
+#nothing loads automatically in rdio but things are definitely bound to where
+#they need to be
 
-    #TODO: everything loads in grooveshark but may not actually bind to anything,
-    #nothing loads automatically in rdio but things are definitely bound to where
-    #they need to be
+click = (element) -> fireEvent(element, 'click')
 
-    click = (element) -> fireEvent(element, 'click')
+#TODO: functionality needed: grabbing dom elements (may be built into dude's fireEvent function,
+    #but if not, simple enough, just need to confirm youtube's elements use ids as well)
 
-    #TODO: functionality needed: grabbing dom elements (may be built into dude's fireEvent function,
-        #but if not, simple enough, just need to confirm youtube's elements use ids as well)
+Mediakeys = {}
 
-    Mediakeys = {}
+findDOMelements = (domain) ->
+    DOMelements = {}
+    for mediaKey, domID of elements[domain]
+        DOMelements[mediaKey] = getElement domID
+    return DOMelements
 
-    findDOMelements = (domain) ->
-        DOMelements = {}
-        for mediaKey, domID of elements[domain]
-            DOMelements[mediaKey] = getElement domID
-        return DOMelements
+bindSingleKeyFunction = (mediaKey, domElement) ->
+    Mediakeys[mediaKey] = -> click(domElement)
 
-    bindSingleKeyFunction = (mediaKey, domElement) ->
-        Mediakeys[mediaKey] = -> click(domElement)
+bindKeyFunctions = (DOMelements) ->
+    for mediaKey, domElement of DOMelements
+        bindSingleKeyFunction mediaKey, domElement
 
-    bindKeyFunctions = (DOMelements) ->
-        for mediaKey, domElement of DOMelements
-            bindSingleKeyFunction mediaKey, domElement
+Mediakeys.init = (domain) ->
+    DOMelements = findDOMelements domain
+    bindKeyFunctions DOMelements
+    return Mediakeys
 
-    Mediakeys.init = (domain) ->
-        DOMelements = findDOMelements domain
-        bindKeyFunctions DOMelements
-        return Mediakeys
-
-   window.Mediakeys = Mediakeys.init LOCATION
+window.Mediakeys = Mediakeys.init LOCATION
 
 
 

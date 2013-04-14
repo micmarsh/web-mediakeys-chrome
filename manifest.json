@@ -21,6 +21,10 @@
 			]
 		}
 	],
+	"web_accessible_resources": [
+		"javascripts/controller.js",
+		"javascripts/socketinterface.js"
+	],
 	"permissions": [
 		"tabs"
 	]
