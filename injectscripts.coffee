@@ -11,13 +11,16 @@ correctLocation = ->
 unless correctLocation()
     return
 
-window.onload = ->
-    SOCKET_IO = 'http://localhost:3000/socket.io/socket.io.js'
-    injectScript = (url) ->
-        script = document.createElement 'script'
-        script.src = url
-        (document.head or document.documentElement).appendChild script
 
+SOCKET_IO = 'http://localhost:3000/socket.io/socket.io.js'
+injectScript = (url) ->
+    script = document.createElement 'script'
+    script.src = url
+    (document.head or document.documentElement).appendChild script
+
+window.onload = ->
     injectScript SOCKET_IO
+    alert SOCKET_IO
     for fileName in ['controller', 'socketinterface']
-        injectScript chrome.extension.getURL "javascripts/#{fileName}.js"
+        injectScript chrome.extension.getURL "javascripts/#{fileName}.js" +
+        "?nocache=#{new Date().getTime()}"

@@ -1,4 +1,4 @@
-DEBUG = no #lol no
+DEBUG = no#lol no
 
 #GOAL get shit to load and bind in both places. It does! except can't create
 #window.Mediakeys from here. Perhaps inject this into page. Yeah, that could work
