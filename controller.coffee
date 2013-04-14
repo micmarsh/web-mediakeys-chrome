@@ -104,7 +104,7 @@ window.onload = ->
         bindKeyFunctions DOMelements
         return Mediakeys
 
-    return Mediakeys.init LOCATION
+   window.Mediakeys = Mediakeys.init LOCATION
 
 
 
