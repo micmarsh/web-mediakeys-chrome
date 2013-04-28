@@ -12,7 +12,6 @@ unless correctLocation()
     return
 
 
-SOCKET_IO = 'http://localhost:3000/socket.io/socket.io.js'
 injectScript = (url) ->
     script = document.createElement 'script'
     script.src = url
@@ -22,7 +21,6 @@ injected = false;
 
 injectAllScripts = ->
     unless injected
-        injectScript SOCKET_IO
         for fileName in ['controller', 'socketinterface']
             injectScript chrome.extension.getURL "javascripts/#{fileName}.js" +
             "?nocache=#{new Date().getTime()}"
