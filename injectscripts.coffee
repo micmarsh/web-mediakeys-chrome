@@ -5,6 +5,8 @@ correctLocation = ->
         'www.grooveshark.com'
         'rdio.com'
         'www.rdio.com'
+        'youtube.com'
+        'www.youtube.com'
     ]
     return LOCATION in VALID_LOCATIONS
 

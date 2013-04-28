@@ -62,11 +62,15 @@ elements =
     'youtube.com': youtubeElements
     'www.youtube.com': youtubeElements
 
-playButton = getElement elements[LOCATION].play
+checkPage = ->
+    currentPageElements = elements[LOCATION]
+    Boolean getElement currentPageElements.play ||
+    currentPageElements.forward ||
+    currentPageElements.back ||
 #TODO: youtube neccessitates lots of error checking, like if it decides
 #to turn back into flash (maybe some videos are just all flash)
 #we may also be able to grab non-play buttons (just a thought, may not too)
-unless Boolean playButton
+unless checkPage()
     return
 
 alert 'woot did not abort' if DEBUG
