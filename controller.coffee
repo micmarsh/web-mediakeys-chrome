@@ -64,12 +64,11 @@ elements =
 
 checkPage = ->
     currentPageElements = elements[LOCATION]
-    Boolean getElement currentPageElements.play ||
-    currentPageElements.forward ||
-    currentPageElements.back ||
-#TODO: youtube neccessitates lots of error checking, like if it decides
-#to turn back into flash (maybe some videos are just all flash)
-#we may also be able to grab non-play buttons (just a thought, may not too)
+    return !!getElement(currentPageElements.play) ||
+    !!getElement(currentPageElements.forward) ||
+    !!getElement(currentPageElements.back)
+
+
 unless checkPage()
     return
 
