@@ -14,9 +14,15 @@ waitFor = (dependencies, callback) ->
             callback()
 
 setup = (keys) ->
-    socket = new WebSocket SOCKET_ORIGIN
-    socket.onmessage = (event) ->
-        Mediakeys[event.data]()
+    try
+        socket = new WebSocket SOCKET_ORIGIN
+        socket.onmessage = (event) ->
+            Mediakeys[event.data]()
+    catch e
+        console.log 'problem connecting to desktop client!'
+        setTimeout ->
+            setup keys
+        , 1000
 
 waitFor ['Mediakeys'], ->
     setup Mediakeys
